@@ -6,9 +6,15 @@
     <title>Tecauto • Contacto</title>
     <link rel="stylesheet" href="styles/fonts.css">
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
+    <!-- Botão de Modo Escuro -->
+    <button class="toggle-dark-mode" aria-label="Alternar modo escuro">
+        <i class="fas fa-sun"></i>
+    </button>
+
+    <!-- Cabeçalho -->
     <header>
         <div class="header-container">
             <div class="logo">
@@ -21,7 +27,7 @@
                     <li><a href="sobre.html">Sobre</a></li>
                     <li><a href="contactos.html" class="active">Contacto</a></li>
                     <li><a href="horario.html">Horário</a></li>
-                    <li><a href="criar-conta.html">Criar Conta</a></li>
+                    <li><a href="criarconta.html">Criar Conta</a></li>
                 </ul>
             </nav>
             <div class="login">
@@ -31,11 +37,20 @@
     </header>
 
     <main>
+        <!-- Hero Section -->
+        <section class="hero-contact fade-in">
+            <div class="hero-content">
+                <h1>Fale Connosco</h1>
+                <p>Estamos prontos para ajudar a impulsionar o seu negócio.</p>
+            </div>
+        </section>
+
+        <!-- Contactos -->
         <section id="contacto" class="contact-section fade-in">
-            <h2>Fale Connosco</h2>
-            <p class="intro-text">Entre em contato e descubra como podemos impulsionar seu negócio!</p>
             <div class="contact-wrapper">
+                <!-- Formulário -->
                 <form class="form-modern" id="contact-form">
+                    <h2>Envie uma Mensagem</h2>
                     <div class="form-group">
                         <input type="text" id="nome" name="nome" required>
                         <label for="nome">Nome</label>
@@ -48,10 +63,13 @@
                         <textarea id="mensagem" name="mensagem" required></textarea>
                         <label for="mensagem">Mensagem</label>
                     </div>
-                    <input type="submit" value="Enviar Mensagem">
+                    <input type="submit" value="Enviar Mensagem" class="primary-cta">
                     <p class="form-message"></p>
                 </form>
+
+                <!-- Informações de contato -->
                 <div class="contact-info">
+                    <h2>Informações de Contato</h2>
                     <p><i class="fas fa-phone-alt icon-hover"></i> <strong>Telefone:</strong> <a href="tel:+258840203487">+258 84 020 3487</a></p>
                     <p><i class="fas fa-envelope icon-hover"></i> <strong>Email:</strong> <a href="mailto:tecautooficial@gmail.com">tecautooficial@gmail.com</a></p>
                     <p><i class="fas fa-map-marker-alt icon-hover"></i> <strong>Endereço:</strong> Maxaquene, Maputo, Moçambique</p>
@@ -61,6 +79,7 @@
         </section>
     </main>
 
+    <!-- Rodapé -->
     <footer>
         <div class="footer-container">
             <div class="footer-section">
@@ -91,50 +110,62 @@
         </div>
     </footer>
 
-    <button class="toggle-dark-mode" onclick="toggleDarkMode()">Modo Escuro</button>
+    <!-- Botão Flutuante WhatsApp -->
     <a href="https://wa.me/258840203487" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
+    <!-- JavaScript -->
     <script>
-        // Modo escuro
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-        }
-        if (localStorage.getItem('darkMode') === 'true') {
-            document.body.classList.add('dark-mode');
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButton = document.querySelector('.toggle-dark-mode');
+            const toggleIcon = toggleButton.querySelector('i');
 
-        // Validação do formulário
-        const form = document.getElementById('contact-form');
-        const formMessage = document.querySelector('.form-message');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const nome = form.querySelector('#nome').value.trim();
-            const email = form.querySelector('#email').value.trim();
-            const mensagem = form.querySelector('#mensagem').value.trim();
-
-            if (nome && email && mensagem) {
-                formMessage.textContent = 'Mensagem enviada com sucesso! Entraremos em contato em breve.';
-                formMessage.style.color = 'green';
-                form.reset();
-                setTimeout(() => { formMessage.textContent = ''; }, 5000);
-            } else {
-                formMessage.textContent = 'Por favor, preencha todos os campos.';
-                formMessage.style.color = 'red';
+            // Dark mode inicial
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+                toggleIcon.classList.replace('fa-sun', 'fa-moon');
             }
-        });
 
-        // Animação de scroll
-        const fadeElements = document.querySelectorAll('.fade-in');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+            toggleButton.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkMode);
+                toggleIcon.classList.toggle('fa-sun', !isDarkMode);
+                toggleIcon.classList.toggle('fa-moon', isDarkMode);
+            });
+
+            // Validação do formulário
+            const form = document.getElementById('contact-form');
+            const formMessage = document.querySelector('.form-message');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const nome = form.querySelector('#nome').value.trim();
+                const email = form.querySelector('#email').value.trim();
+                const mensagem = form.querySelector('#mensagem').value.trim();
+
+                if (nome && email && mensagem) {
+                    formMessage.textContent = 'Mensagem enviada com sucesso!';
+                    formMessage.style.color = 'green';
+                    form.reset();
+                    setTimeout(() => { formMessage.textContent = ''; }, 5000);
+                } else {
+                    formMessage.textContent = 'Por favor, preencha todos os campos.';
+                    formMessage.style.color = 'red';
                 }
             });
-        }, { threshold: 0.2 });
 
-        fadeElements.forEach(el => observer.observe(el));
+            // Animação de scroll
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            fadeElements.forEach(el => observer.observe(el));
+        });
     </script>
 </body>
 </html>

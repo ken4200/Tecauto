@@ -1,5 +1,3 @@
-/* styles/style.css */
-
 /* === RESET BÁSICO === */
 * {
     margin: 0;
@@ -36,33 +34,153 @@ body {
 }
 
 body.dark-mode {
-    background-color: #1a1a1a;
-    color: #e0e0e0;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
 }
 
+/* Fundos gerais no modo escuro */
 body.dark-mode .hero-section,
+body.dark-mode .services-highlight,
 body.dark-mode .service-card,
+body.dark-mode .services-main,
+body.dark-mode .intro-section,
 body.dark-mode .why-choose,
+body.dark-mode .why-item,
 body.dark-mode .testimonials,
+body.dark-mode .testimonial-card,
 body.dark-mode .contact-section,
+body.dark-mode #contacto,
 body.dark-mode #sobre,
 body.dark-mode #login,
+body.dark-mode #criar-conta,
 body.dark-mode .tabela-container {
-    background: #2a2a2a;
+    background: #2a2a2a !important;
 }
 
+/* Links gerais no modo escuro */
 body.dark-mode a {
-    color: #b0d4ff;
+    color: #b0d4ff !important;
 }
 
 body.dark-mode .menu ul li a.active {
-    background-color: rgba(237, 72, 0, 0.2);
+    background-color: rgba(237, 72, 0, 0.2) !important;
+}
+
+/* === LEGIBILIDADE NO MODO ESCURO === */
+body.dark-mode section.services-highlight h2,
+body.dark-mode .services-highlight .intro-text,
+body.dark-mode .services-grid .service-card h3,
+body.dark-mode .services-grid .service-card p,
+body.dark-mode section.why-choose h2,
+body.dark-mode .why-choose-grid .why-item h4,
+body.dark-mode .why-choose-grid .why-item p,
+body.dark-mode section.testimonials h2,
+body.dark-mode .testimonials-grid .testimonial-card h4,
+body.dark-mode .testimonials-grid .testimonial-card p,
+body.dark-mode .services-main .intro-section h1,
+body.dark-mode .services-main .intro-text,
+body.dark-mode .services-grid .service-card h2,
+body.dark-mode .services-grid .service-card p,
+body.dark-mode #sobre h1,
+body.dark-mode #sobre aside p,
+body.dark-mode #sobre aside strong,
+body.dark-mode .tabela-container h2,
+body.dark-mode .tabela-container p,
+body.dark-mode .tabela-container table th,
+body.dark-mode .tabela-container table td {
+    color: #ffffff !important;
+}
+
+body.dark-mode .testimonials-grid .testimonial-card span {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .tabela-container table {
+    background: #333333 !important;
+    border-color: #555555 !important;
+}
+
+/* Outros elementos no modo escuro */
+body.dark-mode .info-section h1,
+body.dark-mode .info-section h2,
+body.dark-mode .info-section p,
+body.dark-mode .contact-section h2,
+body.dark-mode .contact-section .intro-text,
+body.dark-mode .contact-info p,
+body.dark-mode .contact-info strong,
+body.dark-mode #contacto h2,
+body.dark-mode #contacto p,
+body.dark-mode #login h2,
+body.dark-mode #criar-conta h2,
+body.dark-mode .form-message,
+body.dark-mode .footer-bottom,
+body.dark-mode .footer-bottom a,
+body.dark-mode .footer-section p,
+body.dark-mode .footer-section a {
+    color: #ffffff !important;
+}
+
+body.dark-mode .carousel-slide p,
+body.dark-mode .carousel-caption,
+body.dark-mode .carousel-caption h4,
+body.dark-mode .carousel-caption p,
+body.dark-mode .carousel-caption a {
+    color: #ffffff !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+}
+
+body.dark-mode .carousel-dots .dot {
+    background: #e0e0e0 !important;
+}
+
+body.dark-mode .carousel-dots .dot.active,
+body.dark-mode .carousel-dots .dot:hover {
+    background: var(--primary-color) !important;
+}
+
+body.dark-mode .service-icon,
+body.dark-mode .feature-icon,
+body.dark-mode .contact-info i,
+body.dark-mode .footer-social a,
+body.dark-mode .whatsapp-float i {
+    color: var(--primary-color) !important;
+}
+
+body.dark-mode .service-cta,
+body.dark-mode .carousel-cta {
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+body.dark-mode .service-cta:hover,
+body.dark-mode .carousel-cta:hover {
+    background: var(--primary-color) !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea {
+    background: #333333 !important;
+    color: #ffffff !important;
+    border-color: #555555 !important;
+}
+
+body.dark-mode .form-group label {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .form-group input:focus + label,
+body.dark-mode .form-group input:not(:placeholder-shown) + label,
+body.dark-mode .form-group textarea:focus + label,
+body.dark-mode .form-group textarea:not(:placeholder-shown) + label {
+    background: #333333 !important;
+    color: var(--primary-color) !important;
 }
 
 /* === CABEÇALHO === */
 header {
     background: var(--white);
-    padding: 20px 40px;
+    padding: 15px 20px;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -71,15 +189,20 @@ header {
     transition: box-shadow 0.3s ease;
 }
 
+body.dark-mode header {
+    background: #2a2a2a !important;
+}
+
 .header-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 30px;
+    gap: 15px;
+    flex-wrap: nowrap;
 }
 
 .logo img {
-    height: 80px;
+    height: 60px;
     object-fit: contain;
     transition: transform 0.3s ease;
 }
@@ -95,17 +218,23 @@ header {
 .menu ul {
     list-style: none;
     display: flex;
-    gap: 40px;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .menu ul li a {
     color: var(--text-color);
     text-decoration: none;
     font-family: poppinssemibold, sans-serif;
-    font-size: 1.1rem;
-    padding: 10px 15px;
+    font-size: 1rem;
+    padding: 8px 12px;
     border-radius: 8px;
     transition: all 0.3s ease;
+}
+
+body.dark-mode .menu ul li a {
+    color: #ffffff !important;
 }
 
 .menu ul li a:hover,
@@ -120,10 +249,16 @@ header {
     text-decoration: none;
     font-family: poppinsmedium, sans-serif;
     border: 2px solid var(--primary-color);
-    padding: 10px 20px;
+    padding: 8px 15px;
     border-radius: 25px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+body.dark-mode .login a {
+    color: #ffffff !important;
+    border-color: #ffffff !important;
 }
 
 .login a:hover {
@@ -132,7 +267,7 @@ header {
     transform: scale(1.1);
 }
 
-/* === HERO SECTION (index.html) === */
+/* === HERO SECTION (INDEX.HTML) === */
 .hero-section {
     min-height: 600px;
     padding: 40px 0;
@@ -203,13 +338,14 @@ header {
     background: var(--secondary-color);
 }
 
-.primary-cta:hover, .secondary-cta:hover {
+.primary-cta:hover,
+.secondary-cta:hover {
     background: var(--white);
     color: var(--primary-color);
     border: 2px solid var(--primary-color);
 }
 
-/* === CARROSSEL (index.html e servicos.html) === */
+/* === CARROSSEL (INDEX.HTML E SERVICOS.HTML) === */
 .carousel-container {
     flex: 1;
     min-width: 300px;
@@ -225,23 +361,17 @@ header {
     border-radius: 15px;
 }
 
-.carousel-loader {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.2rem;
-    color: var(--primary-color);
-    z-index: 10;
+body.dark-mode .carousel {
+    background: #333333 !important;
 }
 
 .carousel-images {
     display: flex;
-    height: 400px; /* Restaurado para index.html */
+    height: 500px;
 }
 
-.services-grid .carousel-images {
-    height: 300px; /* Mantido para servicos.html */
+.service-card .carousel-images {
+    height: 300px;
 }
 
 .carousel-slide {
@@ -267,24 +397,17 @@ header {
     transition: background 0.3s ease;
 }
 
-.carousel-slide p {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
-    color: #666;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-}
-
 .carousel-caption {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    max-width: 80%;
+    margin: 0 auto;
     background: rgba(0, 0, 0, 0.7);
     color: var(--white);
-    padding: 15px;
-    border-radius: 10px;
+    padding: 10px;
+    border-radius: 8px;
     text-align: center;
     backdrop-filter: blur(10px);
     animation: slideUp 0.5s ease;
@@ -297,41 +420,19 @@ header {
 
 .carousel-caption h4 {
     font-family: poppinsmedium, sans-serif;
-    font-size: 1.4rem;
-    margin-bottom: 10px;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
 }
 
 .carousel-caption p {
     font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
+/* Remoção dos botões de navegação */
 .carousel-prev,
 .carousel-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.6);
-    border: none;
-    padding: 15px;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: background 0.3s ease, transform 0.3s ease;
-    z-index: 10;
-}
-
-.carousel-prev {
-    left: 20px;
-}
-
-.carousel-next {
-    right: 20px;
-}
-
-.carousel-prev:hover,
-.carousel-next:hover {
-    background: var(--primary-color);
-    transform: translateY(-50%) scale(1.1);
+    display: none;
 }
 
 .carousel-dots {
@@ -359,7 +460,7 @@ header {
     transform: scale(1.4);
 }
 
-/* === SEÇÃO DE SERVIÇOS EM DESTAQUE (index.html) === */
+/* === SEÇÃO DE SERVIÇOS EM DESTAQUE (INDEX.HTML) === */
 .services-highlight {
     padding: 40px 20px;
     background: var(--white);
@@ -371,24 +472,108 @@ header {
 }
 
 .services-highlight h2 {
-    font-family: poppinsbold, sans-serif;
-    font-size: 2.5rem;
+    font-family: poppinsblack, sans-serif;
+    font-size: 2.8rem;
     color: var(--primary-color);
     margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .services-highlight h2 {
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.2);
 }
 
 .services-highlight .intro-text {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.2rem;
+    font-family: poppinsregular, sans-serif;
+    font-size: 1.3rem;
+    line-height: 1.8;
     max-width: 800px;
     margin: 0 auto 30px;
     color: #666;
+}
+
+body.dark-mode .services-highlight .intro-text {
+    color: #e0e0e0 !important;
 }
 
 .services-highlight .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
+}
+
+.service-card .service-icon {
+    font-size: 3rem;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+}
+
+body.dark-mode .service-card .service-icon {
+    color: var(--primary-color) !important;
+}
+
+.services-highlight .service-card h3 {
+    font-family: poppinssemibold, sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+body.dark-mode .services-highlight .service-card h3 {
+    color: #ffffff !important;
+}
+
+.services-highlight .service-card p {
+    font-family: poppinsregular, sans-serif;
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+body.dark-mode .services-highlight .service-card p {
+    color: #e0e0e0 !important;
+}
+
+/* === SEÇÃO DE SERVIÇOS (SERVICOS.HTML) === */
+.services-main {
+    padding: 40px 20px;
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    margin: 30px auto;
+    max-width: 1200px;
+}
+
+body.dark-mode .services-main {
+    background: #2a2a2a !important;
+}
+
+.services-main .intro-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.services-main .intro-section h1 {
+    font-family: poppinsbold, sans-serif;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.services-main .intro-text {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.services-main .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Três cartões por linha */
+    gap: 30px;
+    justify-items: center;
+    align-items: stretch;
 }
 
 .service-card {
@@ -398,10 +583,16 @@ header {
     box-shadow: var(--shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
-    min-height: 450px; /* Garante altura consistente */
+    min-height: 450px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 100%;
+    max-width: 360px;
+}
+
+body.dark-mode .service-card {
+    background: #333333 !important;
 }
 
 .service-card:hover {
@@ -409,13 +600,7 @@ header {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-.service-icon {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-}
-
-.service-card h3 {
+.service-card h2 {
     font-family: poppinsmedium, sans-serif;
     font-size: 1.6rem;
     margin-bottom: 15px;
@@ -426,6 +611,17 @@ header {
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     color: #666;
+    margin-bottom: 20px;
+}
+
+.service-card .carousel {
+    background: #EAE5F5;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+body.dark-mode .service-card .carousel {
+    background: #333333 !important;
 }
 
 .service-cta {
@@ -444,7 +640,103 @@ header {
     background: var(--primary-color);
 }
 
-/* === SEÇÃO POR QUE ESCOLHER (index.html) === */
+/* === SEÇÃO SOBRE (SOBRE.HTML) === */
+#sobre {
+    padding: 40px 20px;
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    margin: 30px auto;
+    max-width: 1200px;
+    text-align: center;
+}
+
+#sobre h1 {
+    font-family: poppinsbold, sans-serif;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+#sobre aside {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#sobre aside p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+#sobre aside strong {
+    color: var(--text-color);
+}
+
+/* === SEÇÃO HORÁRIO (HORARIO.HTML) === */
+.tabela-container {
+    padding: 40px 20px;
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    margin: 30px auto;
+    max-width: 1200px;
+    text-align: center;
+}
+
+.tabela-container h2 {
+    font-family: poppinsbold, sans-serif;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.tabela-container p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.tabela-container table {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background: var(--white);
+    box-shadow: var(--shadow);
+}
+
+.tabela-container th,
+.tabela-container td {
+    padding: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    color: var(--text-color);
+    border: 1px solid var(--light-gray);
+}
+
+.tabela-container th {
+    background: var(--primary-color);
+    color: var(--white);
+    font-family: poppinsmedium, sans-serif;
+}
+
+body.dark-mode .tabela-container th {
+    background: var(--primary-color) !important;
+    color: #ffffff !important;
+}
+
+.tabela-container tr:hover {
+    background: rgba(237, 72, 0, 0.1);
+}
+
+body.dark-mode .tabela-container tr:hover {
+    background: rgba(237, 72, 0, 0.2) !important;
+}
+
+/* === SEÇÃO POR QUE ESCOLHER (INDEX.HTML) === */
 .why-choose {
     padding: 40px 20px;
     background: linear-gradient(135deg, var(--light-gray), var(--white));
@@ -498,7 +790,7 @@ header {
     color: #666;
 }
 
-/* === SEÇÃO DE DEPOIMENTOS (index.html) === */
+/* === SEÇÃO DE DEPOIMENTOS (INDEX.HTML) === */
 .testimonials {
     padding: 40px 20px;
     background: var(--white);
@@ -553,8 +845,8 @@ header {
     color: #999;
 }
 
-/* === SEÇÃO DE CONTATO (index.html e contactos.html) === */
-.contact-section, #contacto {
+/* === SEÇÃO DE CONTATO (INDEX.HTML E CONTACTOS.HTML) === */
+.contact-section, #contacto, #login, #criar-conta {
     padding: 40px 20px;
     background: linear-gradient(135deg, var(--white), var(--light-gray));
     border-radius: 20px;
@@ -563,7 +855,7 @@ header {
     text-align: center;
 }
 
-.contact-section h2, #contacto h2 {
+.contact-section h2, #contacto h2, #login h2, #criar-conta h2 {
     font-family: poppinsbold, sans-serif;
     font-size: 2.5rem;
     color: var(--primary-color);
@@ -594,6 +886,10 @@ header {
     box-shadow: var(--shadow);
 }
 
+body.dark-mode .contact-info {
+    background: #333333 !important;
+}
+
 .contact-info p {
     font-family: 'Roboto', sans-serif;
     font-size: 1.1rem;
@@ -622,20 +918,22 @@ header {
     flex: 1;
     min-width: 250px;
     padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
 .form-group {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 15px 20px;
+    padding: 10px 15px;
     border: 2px solid var(--light-gray);
-    border-radius: 15px;
-    font-size: 1rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
     background: var(--white);
     color: var(--text-color);
     font-family: 'Roboto', sans-serif;
@@ -643,25 +941,25 @@ header {
 }
 
 .form-group textarea {
-    height: 120px;
+    height: 80px;
     resize: vertical;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 10px rgba(237, 72, 0, 0.3);
+    box-shadow: 0 0 8px rgba(237, 72, 0, 0.3);
     outline: none;
 }
 
 .form-group label {
     position: absolute;
     top: 50%;
-    left: 20px;
+    left: 15px;
     transform: translateY(-50%);
     color: #666;
     font-family: poppinslight, sans-serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
     transition: all 0.3s ease;
     pointer-events: none;
 }
@@ -671,23 +969,31 @@ header {
 .form-group textarea:focus + label,
 .form-group textarea:not(:placeholder-shown) + label {
     top: 0;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--primary-color);
     background: var(--white);
     padding: 0 5px;
     transform: translateY(-120%);
 }
 
+.form-group .error {
+    display: block;
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    font-family: 'Roboto', sans-serif;
+}
+
 .form-modern [type="submit"] {
     width: 100%;
-    padding: 15px;
+    padding: 12px;
     background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
     color: var(--white);
     font-family: poppinssemibold, sans-serif;
-    font-size: 1.2rem;
+    font-size: 1rem;
     cursor: pointer;
     border: none;
-    border-radius: 25px;
+    border-radius: 20px;
     transition: all 0.3s ease;
 }
 
@@ -699,202 +1005,86 @@ header {
 .form-message {
     margin-top: 10px;
     font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
-    text-align: center;
-}
-
-/* === SEÇÃO DE LOGIN (login.html) === */
-#login {
-    padding: 40px 20px;
-    background: var(--white);
-    border-radius: 20px;
-    margin: 30px auto;
-    max-width: 600px;
-    text-align: center;
-}
-
-#login h2 {
-    font-family: poppinsbold, sans-serif;
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-}
-
-.error {
-    color: #dc3545;
     font-size: 0.9rem;
-    margin-top: 5px;
-    display: block;
+    text-align: center;
 }
 
 .forgot-password {
-    text-align: center;
-    margin-top: 15px;
-    font-family: poppinslight, sans-serif;
+    margin-top: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
 }
 
 .forgot-password a {
     color: var(--secondary-color);
     text-decoration: none;
-    transition: color 0.3s ease;
 }
 
 .forgot-password a:hover {
     color: var(--primary-color);
-    text-decoration: underline;
 }
 
-/* === SEÇÃO DE HORÁRIO (horario.html) === */
-.tabela-container {
-    padding: 40px 20px;
-    background: var(--white);
-    border-radius: 20px;
-    margin: 30px auto;
-    max-width: 600px;
-    text-align: center;
-}
-
-.tabela-container h2 {
-    font-family: poppinsbold, sans-serif;
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-}
-
-.tabela-container p {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: #666;
-}
-
-.tabela-container table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
-}
-
-.tabela-container th,
-.tabela-container td {
-    padding: 15px;
-    border: 1px solid var(--light-gray);
-    text-align: center;
-}
-
-.tabela-container th {
+/* === BOTÃO MODO ESCURO === */
+.toggle-dark-mode {
+    position: fixed;
+    top: 20px;
+    right: 20px;
     background: var(--primary-color);
     color: var(--white);
-    font-family: poppinsmedium, sans-serif;
-}
-
-.tabela-container td {
-    background: var(--white);
-    color: var(--text-color);
-}
-
-body.dark-mode .tabela-container th {
-    background: var(--secondary-color);
-}
-
-body.dark-mode .tabela-container td {
-    background: #333;
-    color: #e0e0e0;
-}
-
-/* === SEÇÃO SOBRE (sobre.html) === */
-#sobre {
-    padding: 40px 20px;
-    background: var(--white);
-    border-radius: 20px;
-    margin: 30px auto;
-    max-width: 800px;
-    text-align: center;
-}
-
-#sobre h1 {
-    font-family: poppinsbold, sans-serif;
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-}
-
-#sobre aside {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.1rem;
-    color: #666;
-}
-
-#sobre aside p {
-    margin-bottom: 20px;
-}
-
-#sobre aside strong {
-    color: var(--text-color);
-}
-
-/* === SEÇÃO DE SERVIÇOS (servicos.html) === */
-.services-main {
-    padding: 20px;
-}
-
-.intro-section {
-    padding: 40px 20px;
-    background: var(--white);
-    border-radius: 20px;
-    margin: 30px auto;
-    max-width: 1200px;
-    text-align: center;
-}
-
-.intro-section h1 {
-    font-family: poppinsbold, sans-serif;
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-}
-
-.intro-section .intro-text {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.2rem;
-    max-width: 800px;
-    margin: 0 auto 30px;
-    color: #666;
-}
-
-.services-main .services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 cartões por linha */
-    gap: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.services-main .service-card {
-    background: var(--white);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
-    min-height: 450px; /* Garante altura consistente */
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 
-.services-main .service-card h2 {
-    font-family: poppinsmedium, sans-serif;
-    font-size: 1.8rem;
-    color: var(--primary-color);
-    margin-bottom: 15px;
+.toggle-dark-mode:hover {
+    background: var(--secondary-color);
+    transform: scale(1.1);
 }
 
-.services-main .service-card p {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 20px;
-    flex-grow: 1;
+.toggle-dark-mode i {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+body.dark-mode .toggle-dark-mode i.fa-sun {
+    transform: rotate(180deg);
+}
+
+body.dark-mode .toggle-dark-mode i.fa-moon {
+    transform: rotate(0deg);
+}
+
+/* === BOTÃO FLUTUANTE (WHATSAPP) === */
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #25D366;
+    color: var(--white);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+}
+
+.whatsapp-float i {
+    font-size: 1.5rem;
 }
 
 /* === RODAPÉ === */
@@ -910,9 +1100,7 @@ footer {
 }
 
 body.dark-mode footer {
-    background: #2a2a2a;
-    color: #e0e0e0;
-    border-top-color: var(--primary-color);
+    background: #2a2a2a !important;
 }
 
 .footer-container {
@@ -942,24 +1130,11 @@ body.dark-mode footer {
     transition: color 0.3s ease;
 }
 
-body.dark-mode .footer-section p,
-body.dark-mode .footer-section a {
-    color: #e0e0e0;
-}
-
-.footer-section a:hover {
-    color: var(--primary-color);
-}
-
 .footer-social a {
     margin-right: 15px;
     font-size: 1.4rem;
     color: var(--secondary-color);
     transition: color 0.3s ease, transform 0.3s ease;
-}
-
-body.dark-mode .footer-social a {
-    color: #b0d4ff;
 }
 
 .footer-social a:hover {
@@ -977,53 +1152,7 @@ body.dark-mode .footer-social a {
 }
 
 body.dark-mode .footer-bottom {
-    border-top-color: rgba(255, 255, 255, 0.2);
-    color: #b0b0b0;
-}
-
-/* === BOTÃO FLUTUANTE (WHATSAPP) === */
-.whatsapp-float {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #25D366;
-    color: var(--white);
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-    z-index: 1000;
-    transition: transform 0.3s ease;
-}
-
-.whatsapp-float:hover {
-    transform: scale(1.1);
-}
-
-.whatsapp-float i {
-    font-size: 1.5rem;
-}
-
-/* === BOTÃO MODO ESCURO === */
-.toggle-dark-mode {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: var(--primary-color);
-    color: var(--white);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 25px;
-    cursor: pointer;
-    z-index: 1000;
-    transition: background 0.3s ease;
-}
-
-.toggle-dark-mode:hover {
-    background: var(--secondary-color);
+    border-top-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 /* === ANIMAÇÕES DE SCROLL === */
@@ -1045,136 +1174,210 @@ body.dark-mode .footer-bottom {
     }
 
     .carousel-images {
-        height: 300px;
+        height: 400px;
     }
 
     .services-main .services-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 cartões por linha em tablets */
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .contact-wrapper {
-        flex-direction: column;
+    .header-container {
+        gap: 10px;
+    }
+
+    .logo img {
+        height: 50px;
+    }
+
+    .menu ul {
+        gap: 15px;
+    }
+
+    .menu ul li a {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+    }
+
+    .login a {
+        padding: 6px 12px;
+        font-size: 0.85rem;
     }
 }
 
 @media (max-width: 760px) {
-    .header-container {
+    header {
         flex-direction: column;
-        gap: 15px;
+        padding: 10px 15px;
     }
 
-    .menu ul {
+    main {
         flex-direction: column;
-        gap: 15px;
-        text-align: center;
     }
 
-    .menu ul li a {
-        font-size: 1rem;
+    h2 {
+        font-size: 38px;
+    }
+
+    .form-modern {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 0.85rem;
         padding: 8px 12px;
     }
 
+    .form-group label {
+        font-size: 0.85rem;
+    }
+
+    .form-modern [type="submit"] {
+        font-size: 0.95rem;
+        padding: 10px;
+    }
+
+    .header-container {
+        gap: 8px;
+    }
+
+    .logo img {
+        height: 40px;
+    }
+
+    .menu ul {
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .menu ul li a {
+        font-size: 0.85rem;
+        padding: 5px 8px;
+    }
+
     .login a {
-        padding: 8px 15px;
-        font-size: 0.9rem;
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }
+
+    .hero-section,
+    .services-main,
+    .services-highlight,
+    .why-choose,
+    .testimonials,
+    .contact-section,
+    #sobre,
+    #contacto,
+    .tabela-container {
+        padding: 30px 15px;
+    }
+
+    .carousel-images {
+        height: 350px;
+    }
+
+    .service-card .carousel-images {
+        height: 200px;
+    }
+
+    .carousel-caption h4 {
+        font-size: 1.1rem;
+    }
+
+    .carousel-caption p {
+        font-size: 0.85rem;
+    }
+
+    .services-highlight .services-grid,
+    .why-choose-grid,
+    .testimonials-grid,
+    .services-main .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo img {
+        height: 35px;
     }
 
     .hero-section {
-        min-height: 500px;
-        padding: 20px 0;
+        min-height: 400px;
     }
 
     .carousel-images {
         height: 250px;
     }
 
-    .services-main .services-grid {
-        grid-template-columns: 1fr; /* 1 cartão por linha em celulares */
-    }
-
-    .services-grid .carousel-images {
-        height: 200px;
-    }
-
-    .info-section h2,
-    .services-highlight h2,
-    .why-choose h2,
-    .testimonials h2,
-    .contact-section h2,
-    #contacto h2,
-    #login h2,
-    .tabela-container h2,
-    .intro-section h1,
-    #sobre h1 {
-        font-size: 2rem;
-    }
-
-    .services-highlight,
-    .why-choose,
-    .testimonials,
-    .contact-section,
-    #contacto,
-    #login,
-    .tabela-container,
-    .intro-section,
-    #sobre {
-        padding: 30px 15px;
-    }
-
-    .services-highlight .services-grid,
-    .why-choose-grid,
-    .testimonials-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .form-modern {
-        margin: 0 auto;
-        width: 100%;
-        max-width: 400px;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        font-size: 0.9rem;
-    }
-
-    .form-modern [type="submit"] {
-        font-size: 1.1rem;
-    }
-
-    /* Centralizar listas */
-    .menu ul,
-    .footer-container ul {
-        text-align: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .logo img {
-        height: 50px;
-    }
-
-    .hero-section {
-        min-height: 400px;
-    }
-
-    .carousel-images {
-        height: 200px;
-    }
-
-    .services-grid .carousel-images {
+    .service-card .carousel-images {
         height: 150px;
     }
 
-    .info-section h1 {
-        font-size: 2rem;
+    .carousel-caption h4 {
+        font-size: 1rem;
     }
 
-    .info-section h2 {
-        font-size: 1.8rem;
+    .carousel-caption p {
+        font-size: 0.8rem;
+    }
+
+    .info-section h1,
+    .services-main .intro-section h1,
+    #sobre h1,
+    .tabela-container h2,
+    .services-highlight h2,
+    .why-choose h2,
+    .testimonials h2,
+    #login h2,
+    #criar-conta h2 {
+        font-size: 2rem;
     }
 
     .service-card {
         min-height: 400px;
+    }
+
+    .menu ul {
+        gap: 8px;
+    }
+
+    .menu ul li a {
+        font-size: 0.8rem;
+        padding: 4px 6px;
+    }
+
+    .login a {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+    }
+
+    .tabela-container table {
+        font-size: 0.9rem;
+    }
+
+    .tabela-container th,
+    .tabela-container td {
+        padding: 10px;
+    }
+
+    .form-modern {
+        max-width: 300px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 0.8rem;
+        padding: 7px 10px;
+    }
+
+    .form-group label {
+        font-size: 0.8rem;
+    }
+
+    .form-modern [type="submit"] {
+        font-size: 0.9rem;
+        padding: 8px;
     }
 }

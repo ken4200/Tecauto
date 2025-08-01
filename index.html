@@ -6,9 +6,14 @@
     <title>Tecauto • Início</title>
     <link rel="stylesheet" href="styles/fonts.css">
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
+    <!-- Botão de Modo Escuro -->
+    <button class="toggle-dark-mode" aria-label="Alternar modo escuro">
+        <i class="fas fa-sun"></i>
+    </button>
+
     <!-- Cabeçalho -->
     <header>
         <div class="header-container">
@@ -22,7 +27,7 @@
                     <li><a href="sobre.html">Sobre</a></li>
                     <li><a href="contactos.html">Contacto</a></li>
                     <li><a href="horario.html">Horário</a></li>
-                    <li><a href="criar-conta.html">Criar Conta</a></li>
+                    <li><a href="criarconta.html">Criar Conta</a></li>
                 </ul>
             </nav>
             <div class="login">
@@ -190,7 +195,7 @@
                 <h3>Contato</h3>
                 <p>Email: <a href="mailto:info@tecauto.com">info@tecauto.com</a></p>
                 <p>Telefone: <a href="tel:+258840203487">+258 84 020 3487</a></p>
-                <p> Maputo, Moçambique</p>
+                <p>Maputo, Moçambique</p>
             </div>
             <div class="footer-section">
                 <h3>Links Úteis</h3>
@@ -214,8 +219,7 @@
         </div>
     </footer>
 
-    <!-- Botões Flutuantes -->
-    <button class="toggle-dark-mode" onclick="toggleDarkMode()">Modo Escuro</button>
+    <!-- Botão Flutuante WhatsApp -->
     <a href="https://wa.me/258840203487" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
     <!-- JavaScript -->
@@ -238,8 +242,33 @@
         // Iniciar pré-carregamento das imagens
         preloadImages(carouselImages);
 
-        // Carrossel e Validação do Formulário
+        // Carrossel, Validação do Formulário e Modo Escuro
         document.addEventListener('DOMContentLoaded', () => {
+            // Modo Escuro
+            const toggleButton = document.querySelector('.toggle-dark-mode');
+            const toggleIcon = toggleButton.querySelector('i');
+
+            // Verifica o tema inicial
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+                toggleIcon.classList.remove('fa-sun');
+                toggleIcon.classList.add('fa-moon');
+            }
+
+            // Alterna o tema e o ícone
+            toggleButton.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkMode);
+                if (isDarkMode) {
+                    toggleIcon.classList.remove('fa-sun');
+                    toggleIcon.classList.add('fa-moon');
+                } else {
+                    toggleIcon.classList.remove('fa-moon');
+                    toggleIcon.classList.add('fa-sun');
+                }
+            });
+
             // Carrossel
             const carousels = document.querySelectorAll('[data-carousel]');
             carousels.forEach(carousel => {
@@ -354,16 +383,6 @@
 
             fadeElements.forEach(el => observer.observe(el));
         });
-
-        // Modo escuro
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-        }
-
-        if (localStorage.getItem('darkMode') === 'true') {
-            document.body.classList.add('dark-mode');
-        }
     </script>
 </body>
 </html>

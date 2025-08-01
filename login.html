@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+    <button class="toggle-dark-mode" aria-label="Alternar modo escuro">
+        <i class="fas fa-sun"></i>
+    </button>
+
     <header>
         <div class="header-container">
             <div class="logo">
@@ -21,7 +25,7 @@
                     <li><a href="sobre.html">Sobre</a></li>
                     <li><a href="contactos.html">Contacto</a></li>
                     <li><a href="horario.html">Horário</a></li>
-                    <li><a href="criar-conta.html">Criar Conta</a></li>
+                    <li><a href="criarconta.html">Criar Conta</a></li>
                 </ul>
             </nav>
             <div class="login">
@@ -33,18 +37,19 @@
     <main>
         <section id="login" class="fade-in">
             <h2>Fazer Login</h2>
-            <form action="#" class="form-modern" id="loginForm">
+            <form class="form-modern" id="loginForm">
                 <div class="form-group">
-                    <input type="email" id="email" placeholder=" " required>
-                    <label for="email">Seu email</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="email">Email</label>
                     <span class="error" id="emailError"></span>
                 </div>
                 <div class="form-group">
-                    <input type="password" id="password" placeholder=" " required>
+                    <input type="password" id="password" name="password" required>
                     <label for="password">Senha</label>
                     <span class="error" id="passwordError"></span>
                 </div>
                 <input type="submit" value="Entrar">
+                <p class="form-message"></p>
                 <p class="forgot-password"><a href="#">Esqueceu a senha?</a></p>
             </form>
         </section>
@@ -80,53 +85,73 @@
         </div>
     </footer>
 
-    <button class="toggle-dark-mode" onclick="toggleDarkMode()">Modo Escuro</button>
     <a href="https://wa.me/258840203487" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
     <script>
-        // Modo escuro
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-        }
-        if (localStorage.getItem('darkMode') === 'true') {
-            document.body.classList.add('dark-mode');
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButton = document.querySelector('.toggle-dark-mode');
+            const toggleIcon = toggleButton.querySelector('i');
 
-        // Validação do formulário
-        const form = document.getElementById('loginForm');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+                toggleIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+
+            toggleButton.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkMode);
+                toggleIcon.classList.toggle('fa-sun', !isDarkMode);
+                toggleIcon.classList.toggle('fa-moon', isDarkMode);
+            });
+
+            const form = document.getElementById('loginForm');
+            const formMessage = document.querySelector('.form-message');
             const email = document.getElementById('email');
             const password = document.getElementById('password');
             const emailError = document.getElementById('emailError');
             const passwordError = document.getElementById('passwordError');
 
-            emailError.textContent = '';
-            passwordError.textContent = '';
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                emailError.textContent = '';
+                passwordError.textContent = '';
+                formMessage.textContent = '';
 
-            if (!email.value.includes('@')) {
-                emailError.textContent = 'Email inválido';
-                return;
-            }
-            if (password.value.length < 6) {
-                passwordError.textContent = 'Senha deve ter pelo menos 6 caracteres';
-                return;
-            }
-            alert('Login bem-sucedido! (Simulação)');
-        });
+                let isValid = true;
 
-        // Animação de scroll
-        const fadeElements = document.querySelectorAll('.fade-in');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                if (!email.value.includes('@') || !email.value.includes('.')) {
+                    emailError.textContent = 'Por favor, insira um email válido';
+                    isValid = false;
+                }
+
+                if (password.value.length < 6) {
+                    passwordError.textContent = 'A senha deve ter pelo menos 6 caracteres';
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    formMessage.textContent = 'Login bem-sucedido! (Simulação)';
+                    formMessage.style.color = 'green';
+                    form.reset();
+                    setTimeout(() => { formMessage.textContent = ''; }, 5000);
+                } else {
+                    formMessage.textContent = 'Por favor, corrija os erros acima';
+                    formMessage.style.color = 'red';
                 }
             });
-        }, { threshold: 0.2 });
 
-        fadeElements.forEach(el => observer.observe(el));
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            fadeElements.forEach(el => observer.observe(el));
+        });
     </script>
 </body>
 </html>
