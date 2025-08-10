@@ -1,0 +1,256 @@
+```html
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Entre em contato com a equipe de suporte da Tecauto para assistência.">
+    <meta name="author" content="Tecauto">
+    <title>Suporte - Tecauto</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="media.css">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="components/favicon.png">
+    <!-- XLSX library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha512-r22gChDnGv3N3k9ZSWnWDS7zJMc+7KWCLEQ3/kCk/fptA1d4FtuV6ft76c1rZLLB5u3y6N8OvgYWbV7r2EwoT4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="components/logo.png" alt="Tecauto Logo" title="Tecauto">
+                </a>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="servicos.html">Serviços</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contactos.html">Contacto</a></li>
+                    <li><a href="horario.html">Horário</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </nav>
+            <div class="login">
+                <a href="logout.html" aria-label="Sair da conta">Sair</a>
+            </div>
+            <div class="theme-toggle">
+                <button id="theme-btn" aria-label="Alternar tema"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="contact-section" aria-labelledby="suporte-title">
+            <h2 id="suporte-title">Suporte</h2>
+            <p>Envie sua mensagem para a equipe de suporte.</p>
+            <form id="suporte-form" class="form-modern" aria-describedby="suporte-message">
+                <div class="form-group">
+                    <input type="text" id="assunto" name="assunto" placeholder=" " required aria-required="true">
+                    <label for="assunto">Assunto</label>
+                </div>
+                <div class="form-group">
+                    <textarea id="mensagem" name="mensagem" placeholder=" " required aria-required="true"></textarea>
+                    <label for="mensagem">Mensagem</label>
+                </div>
+                <button type="submit" aria-label="Enviar mensagem de suporte">Enviar Mensagem</button>
+                <button type="button" id="delete-account-btn" class="danger-btn">Excluir Conta</button>
+                <div class="form-message" id="suporte-message" role="status"></div>
+            </form>
+        </section>
+        <section class="activity-section" aria-labelledby="atividade-title">
+            <h2 id="atividade-title">Histórico de Atividades</h2>
+            <ul id="atividade-lista"></ul>
+        </section>
+    </main>
+
+    <div id="notification" class="notification" role="alert"></div>
+    <div id="delete-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p>Tem certeza que deseja excluir sua conta? Esta ação é irreversível.</p>
+            <button id="confirm-delete">Confirmar</button>
+            <button id="cancel-delete">Cancelar</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <p>Email: <a href="mailto:tecautooficial@gmail.com">tecautooficial@gmail.com</a></p>
+                <p>Telefone: <a href="tel:+258840203487">+258 84 020 3487</a></p>
+                <p>Maxaquene, Maputo, Moçambique</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links Úteis</h3>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="servicos.html">Serviços</a></li>
+                    <li><a href="contactos.html">Contato</a></li>
+                    <li><a href="sobre.html">Sobre Nós</a></li>
+                </ul>
+            </div>
+            <div class="footer-section footer-social">
+                <h3>Redes Sociais</h3>
+                <a href="#" aria-label="Facebook da Tecauto"><i class="fab fa-facebook"></i></a>
+                <a href="#" aria-label="Twitter da Tecauto"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram da Tecauto"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn da Tecauto"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Tecauto • Todos os direitos reservados | Desenvolvido pela Tecauto</p>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                try {
+                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                    var firstSheetName = workbook.SheetNames[0];
+                    var worksheet = workbook.Sheets[firstSheetName];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                    var filteredData = jsonData.filter(row => row.some(filledCell));
+                    var headerRowIndex = filteredData.findIndex((row, index) =>
+                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                    );
+                    if (headerRowIndex === -1 || headerRowIndex > 25) {
+                        headerRowIndex = 0;
+                    }
+                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                    return csv;
+                } catch (e) {
+                    console.error('Erro ao processar arquivo XLSX:', e);
+                    return "";
+                }
+            }
+            return gk_fileData[filename] || "";
+        }
+    </script>
+    <script>
+        // Notificação
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification show ${type}`;
+            setTimeout(() => notification.classList.remove('show'), 3000);
+        }
+
+        // Modo escuro/claro
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('theme-btn').innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        document.getElementById('theme-btn').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            this.innerHTML = document.body.classList.contains('dark-mode') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+
+        // Verifica autenticação
+        const token = localStorage.getItem('token');
+        if (!token) {
+            showNotification('Você precisa estar logado para acessar o suporte.', 'error');
+            setTimeout(() => window.location.href = 'login.html', 2000);
+        } else {
+            // Manipula envio do formulário
+            document.getElementById('suporte-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const assunto = document.getElementById('assunto').value.trim();
+                const mensagem = document.getElementById('mensagem').value.trim();
+
+                if (!assunto || !mensagem) {
+                    showNotification('Por favor, preencha todos os campos obrigatórios.', 'error');
+                    return;
+                }
+
+                fetch('/api/suporte', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify({ assunto, mensagem })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da API: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    showNotification('Mensagem enviada com sucesso!', 'success');
+                    document.getElementById('suporte-form').reset();
+                })
+                .catch(error => {
+                    showNotification('Erro ao enviar mensagem.', 'error');
+                    console.error('Erro ao enviar mensagem:', error);
+                });
+            });
+
+            // Carrega histórico de atividades
+            fetch('/api/usuarios/me/atividades', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro na resposta da API: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const lista = document.getElementById('atividade-lista');
+                if (data.length === 0) {
+                    lista.innerHTML = '<li>Nenhuma atividade registrada.</li>';
+                    return;
+                }
+                data.forEach(atividade => {
+                    const li = document.createElement('li');
+                    li.textContent = `${atividade.data}: ${atividade.descricao}`;
+                    lista.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao carregar atividades:', error);
+                showNotification('Erro ao carregar histórico de atividades.', 'error');
+            });
+
+            // Exclusão de conta
+            document.getElementById('delete-account-btn').addEventListener('click', () => {
+                document.getElementById('delete-modal').style.display = 'flex';
+            });
+            document.getElementById('confirm-delete').addEventListener('click', () => {
+                fetch('/api/usuarios/me', {
+                    method: 'DELETE',
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                .then(() => {
+                    localStorage.removeItem('token');
+                    showNotification('Conta excluída com sucesso.', 'success');
+                    setTimeout(() => window.location.href = 'login.html', 1000);
+                })
+                .catch(error => {
+                    showNotification('Erro ao excluir conta.', 'error');
+                    console.error('Erro ao excluir conta:', error);
+                });
+            });
+            document.getElementById('cancel-delete').addEventListener('click', () => {
+                document.getElementById('delete-modal').style.display = 'none';
+            });
+        }
+    </script>
+</body>
+</html>
+```

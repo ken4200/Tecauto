@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gerencie usuários, pedidos e configurações na dashboard administrativa da Tecauto.">
+    <meta name="author" content="Tecauto">
+    <title>Dashboard Admin - Tecauto</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="media.css">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="components/favicon.png">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="components/logo.png" alt="Tecauto Logo" title="Tecauto">
+                </a>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="servicos.html">Serviços</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contactos.html">Contacto</a></li>
+                    <li><a href="horario.html">Horário</a></li>
+                    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                </ul>
+            </nav>
+            <div class="theme-toggle">
+                <button id="theme-btn" aria-label="Alternar tema"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="dashboard-section" aria-labelledby="dashboard-title">
+            <h1 id="dashboard-title">Bem-vindo, <span id="user-name"></span>!</h1>
+            <p>Gerencie usuários, pedidos, ofertas e configurações.</p>
+            <div class="dashboard-grid">
+                <!-- Opções de Usuário Comum -->
+                <div class="dashboard-card">
+                    <h3>Meu Perfil</h3>
+                    <p>Atualize suas informações pessoais.</p>
+                    <a href="perfil.html" class="service-cta">Editar Perfil</a>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Meus Pedidos</h3>
+                    <p>Acompanhe o status dos seus pedidos.</p>
+                    <a href="pedidos.html" class="service-cta">Ver Pedidos</a>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Solicitar Serviço</h3>
+                    <p>Solicite logística, peças ou sistemas personalizados.</p>
+                    <a href="solicitar-servico.html" class="service-cta">Solicitar Agora</a>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Ofertas Exclusivas</h3>
+                    <p>Acesse promoções e conteúdos exclusivos.</p>
+                    <a href="ofertas.html" class="service-cta">Ver Ofertas</a>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Suporte</h3>
+                    <p>Envie mensagens para nossa equipe de suporte.</p>
+                    <a href="suporte.html" class="service-cta">Contato Suporte</a>
+                </div>
+                <!-- Opções de Admin -->
+                <div class="dashboard-card">
+                    <h3>Gerenciar Usuários</h3>
+                    <p>Visualize e edite a lista de usuários.</p>
+                    <a href="usuarios.html" class="service-cta">Gerenciar</a>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Gerenciar Pedidos</h3>
+                    <p>Acompanhe e atualize todos os pedidos.</p>
+                    <a href="pedidos-admin.html" class="service-cta">Gerenciar</a>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Gerenciar Ofertas</h3>
+                    <p>Crie, edite ou remova ofertas.</p>
+                    <a href="ofertas-admin.html" class="service-cta">Gerenciar</a>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Relatórios</h3>
+                    <p>Veja estatísticas e resumos.</p>
+                    <a href="relatorios.html" class="service-cta">Visualizar</a>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Configurações</h3>
+                    <p>Ajuste configurações gerais.</p>
+                    <a href="configuracoes.html" class="service-cta">Configurar</a>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Excluir Conta</h3>
+                    <p>Exclua permanentemente sua conta.</p>
+                    <button id="delete-account-btn" class="danger-btn">Excluir Agora</button>
+                </div>
+            </div>
+        </section>
+        <section class="activity-section" aria-labelledby="atividade-title">
+            <h2 id="atividade-title">Histórico de Atividades</h2>
+            <ul id="atividade-lista"></ul>
+        </section>
+    </main>
+
+    <div id="notification" class="notification" role="alert"></div>
+    <div id="delete-modal" class="modal" style="display: none">
+        <div class="modal-content">
+            <p>Tem certeza que deseja excluir sua conta? Esta ação é irreversível.</p>
+            <button id="confirm-delete">Confirmar</button>
+            <button id="cancel-delete">Cancelar</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <p>Email: <a href="mailto:tecautooficial@gmail.com">tecautooficial@gmail.com</a></p>
+                <p>Telefone: <a href="tel:+258840203487">+258 84 020 3487</a></p>
+                <p>Maxaquene, Maputo, Moçambique</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links Úteis</h3>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="servicos.html">Serviços</a></li>
+                    <li><a href="contactos.html">Contato</a></li>
+                    <li><a href="sobre.html">Sobre Nós</a></li>
+                </ul>
+            </div>
+            <div class="footer-section footer-social">
+                <h3>Redes Sociais</h3>
+                <a href="#" aria-label="Facebook da Tecauto"><i class="fab fa-facebook"></i></a>
+                <a href="#" aria-label="Twitter da Tecauto"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram da Tecauto"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn da Tecauto"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Tecauto • Todos os direitos reservados | Desenvolvido pela Tecauto</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Modo escuro/claro
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('theme-btn').innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            document.getElementById('theme-btn').addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+                this.innerHTML = document.body.classList.contains('dark-mode') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            });
+
+            // Notificação
+            function showNotification(message, type = 'success') {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.className = `notification show ${type}`;
+                setTimeout(() => notification.classList.remove('show'), 3000);
+            }
+
+            // Verifica autenticação
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                showNotification('Você precisa estar logado para acessar o dashboard.', 'error');
+                setTimeout(() => window.location.href = 'criarconta.html', 2000);
+                return;
+            }
+
+            // Carrega dados do usuário
+            document.getElementById('user-name').textContent = user.name || 'Admin';
+
+            // Carrega histórico de atividades
+            const activities = JSON.parse(localStorage.getItem('activities')) || [
+                { data: '2025-08-09', descricao: 'Login efetuado' },
+                { data: '2025-08-09', descricao: 'Perfil visualizado' }
+            ];
+            const lista = document.getElementById('atividade-lista');
+            if (activities.length === 0) {
+                lista.innerHTML = '<li>Nenhuma atividade registrada.</li>';
+            } else {
+                activities.forEach(atividade => {
+                    const li = document.createElement('li');
+                    li.textContent = `${atividade.data}: ${atividade.descricao}`;
+                    lista.appendChild(li);
+                });
+            }
+
+            // Exclusão de conta
+            document.getElementById('delete-account-btn').addEventListener('click', () => {
+                document.getElementById('delete-modal').style.display = 'flex';
+            });
+            document.getElementById('confirm-delete').addEventListener('click', () => {
+                localStorage.removeItem('user');
+                localStorage.removeItem('activities');
+                showNotification('Conta excluída com sucesso.', 'success');
+                setTimeout(() => window.location.href = 'logout.html', 1000);
+            });
+            document.getElementById('cancel-delete').addEventListener('click', () => {
+                document.getElementById('delete-modal').style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
