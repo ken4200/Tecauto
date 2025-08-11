@@ -1,0 +1,221 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard do Cliente - Tecauto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/heroicons@2.0.13/dist/heroicons.min.js"></script>
+    <link rel="stylesheet" href="styles/fonts.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Botão de Alternância de Tema -->
+    <button class="toggle-dark-mode" onclick="toggleDarkMode()">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Navbar -->
+    <nav class="bg-white text-gray-800 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img src="https://via.placeholder.com/40" alt="Tecauto Logo" class="h-10">
+                <span class="text-xl font-bold">Tecauto</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:underline">Início</a>
+                <a href="#" class="hover:underline">Serviços</a>
+                <a href="#" class="hover:underline">Sobre</a>
+                <a href="#" class="hover:underline">Contato</a>
+                <a href="#" class="hover:underline">Horário</a>
+                <a href="#" class="hover:underline">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto mt-8 p-4 dashboard-section">
+        <h1 class="text-4xl font-bold text-primary-color mb-4">Bem-vindo, <span id="username"></span>!</h1>
+        <p class="text-lg text-gray-600 mb-6">Explore suas opções pessoais e gerencie suas atividades com facilidade.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 dashboard-grid">
+            <!-- Meu Perfil -->
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition dashboard-card">
+                <h3 class="text-xl font-semibold text-gray-800">Meu Perfil</h3>
+                <p class="text-gray-600 mt-2">Atualize suas informações pessoais.</p>
+                <a href="#" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Editar Perfil</a>
+            </div>
+            <!-- Meus Pedidos -->
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition dashboard-card">
+                <h3 class="text-xl font-semibold text-gray-800">Meus Pedidos</h3>
+                <p class="text-gray-600 mt-2">Acompanhe o status dos seus pedidos.</p>
+                <a href="#" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Ver Pedidos</a>
+            </div>
+            <!-- Solicitar Serviço -->
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition dashboard-card">
+                <h3 class="text-xl font-semibold text-gray-800">Solicitar Serviço</h3>
+                <p class="text-gray-600 mt-2">Solicite logística, peças ou sistemas personalizados.</p>
+                <a href="#" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Solicitar Agora</a>
+            </div>
+            <!-- Ofertas Exclusivas -->
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition dashboard-card">
+                <h3 class="text-xl font-semibold text-gray-800">Ofertas Exclusivas</h3>
+                <p class="text-gray-600 mt-2">Acesse promoções e conteúdos exclusivos.</p>
+                <a href="#" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Ver Ofertas</a>
+            </div>
+            <!-- Suporte -->
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition dashboard-card">
+                <h3 class="text-xl font-semibold text-gray-800">Suporte</h3>
+                <p class="text-gray-600 mt-2">Envie mensagens para nossa equipe de suporte.</p>
+                <a href="#" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Contato Suporte</a>
+            </div>
+            <!-- Excluir Conta -->
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition dashboard-card">
+                <h3 class="text-xl font-semibold text-gray-800">Excluir Conta</h3>
+                <p class="text-gray-600 mt-2 text-sm">Exclua permanentemente sua conta (ação irreversível).</p>
+                <button onclick="openModal()" class="mt-4 bg-error-color text-white px-4 py-2 rounded hover:bg-red-700 transition danger-btn">Excluir Agora</button>
+            </div>
+        </div>
+
+        <!-- Histórico de Atividades -->
+        <div class="mt-12 activity-section">
+            <h2>Histórico de Atividades</h2>
+            <ul>
+                <li>Pedido #5678 solicitado em 10/08/2025</li>
+                <li>Perfil atualizado em 09/08/2025</li>
+                <li>Oferta "Desconto de Verão" visualizada em 08/08/2025</li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- Modal de Confirmação -->
+    <div id="deleteModal" class="modal modal-hidden">
+        <div class="modal-content">
+            <h3 class="text-xl font-semibold text-gray-800">Atenção!</h3>
+            <p class="mt-2">Tem certeza que deseja excluir sua conta? Esta ação é irreversível e resultará na perda permanente de todos os dados associados.</p>
+            <div class="mt-6 flex justify-end space-x-4">
+                <button onclick="closeModal()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition">Cancelar</button>
+                <button onclick="confirmDelete()" class="bg-error-color text-white px-4 py-2 rounded hover:bg-red-700 transition">Confirmar Exclusão</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificação -->
+    <div id="notification" class="notification hidden"></div>
+
+    <!-- Botão Flutuante WhatsApp -->
+    <a href="https://wa.me/258840203487" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer class="bg-white text-gray-800 py-8 mt-12">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 footer-container">
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <p>Email: tecautooficial@gmail.com</p>
+                <p>Telefone: +258 84 020 3487</p>
+                <p>Maxaquene, Maputo, Moçambique</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links Úteis</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:underline">Início</a></li>
+                    <li><a href="#" class="hover:underline">Serviços</a></li>
+                    <li><a href="#" class="hover:underline">Contato</a></li>
+                    <li><a href="#" class="hover:underline">Sobre Nós</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Redes Sociais</h3>
+                <div class="flex space-x-4 footer-social">
+                    <a href="#" class="hover:text-primary-color"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z"></path></svg></a>
+                    <a href="#" class="hover:text-primary-color"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path></svg></a>
+                    <a href="#" class="hover:text-primary-color"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h16c2.2 0 4 1.8 4 4v8c0 2.2-1.8 4-4 4H4c-2.2 0-4-1.8-4-4V8c0-2.2 1.8-4 4-4z"></path></svg></a>
+                    <a href="#" class="hover:text-primary-color"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 14v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.93-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"></path></svg></a>
+                </div>
+            </div>
+        </div>
+        <div class="mt-8 text-center footer-bottom">
+            <p>© 2025 Tecauto • Todos os direitos reservados | Desenvolvido pela Tecauto</p>
+        </div>
+    </footer>
+
+    <script>
+        // Modal functions
+        function openModal() {
+            document.getElementById('deleteModal').classList.remove('modal-hidden');
+            document.getElementById('deleteModal').classList.add('modal-visible');
+        }
+
+        function closeModal() {
+            document.getElementById('deleteModal').classList.remove('modal-visible');
+            document.getElementById('deleteModal').classList.add('modal-hidden');
+        }
+
+        function confirmDelete() {
+            // Simula exclusão local com notificação
+            const notification = document.getElementById('notification');
+            notification.textContent = 'Conta excluída com sucesso! (Simulação)';
+            notification.className = 'notification success show';
+            setTimeout(() => {
+                notification.className = 'notification hidden';
+            }, 3000);
+            closeModal();
+        }
+
+        // Função para alternar modo escuro
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('.toggle-dark-mode i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+    </script>
+</body>
+</html>
