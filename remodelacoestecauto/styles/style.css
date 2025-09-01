@@ -28,17 +28,26 @@ body {
     background-color: var(--white);
     color: var(--text-color);
     font-family: 'Roboto', sans-serif;
-    max-width: 1400px;
-    margin: 0 auto;
+    margin: 0; /* Keep this as 0 */
     padding: 20px;
     line-height: 1.6;
+    min-width: 320px; /* Add this to prevent body from shrinking too much */
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+.container {
+    width: 100%;
+    min-width: 320px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 body.dark-mode {
     background-color: #1a1a1a !important;
     color: #ffffff !important;
 }
+
+
 
 /* Fundos gerais no modo escuro */
 body.dark-mode .hero-section,
@@ -1651,3 +1660,64 @@ body.dark-mode .footer-bottom {
         padding: 8px 15px;
     }
 }
+
+#oferta-table {
+    margin: 40px auto;              
+    border-collapse: collapse;
+    width: 70%;                     
+    font-family: "Segoe UI", sans-serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    overflow: hidden;               
+    text-align: center;
+}
+
+#oferta-table thead {
+    background: var(--primary-color);
+    color: white;
+    font-size: 1.1rem;
+}
+
+#oferta-table th,
+#oferta-table td {
+    padding: 14px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+#oferta-table td:nth-child(2) {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+
+#oferta-table tbody tr:hover {
+    background-color: #fff5e6;
+    transition: background 0.3s ease;
+}
+
+/* Alternate row colors */
+#oferta-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+
+/*Styling de botoes do admin*/
+.admin-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    font-family: poppinssemibold, sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    margin: 10px 0;
+}
+
+.admin-btn:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow);
+}
+

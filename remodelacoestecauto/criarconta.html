@@ -50,7 +50,7 @@
 <body>
     <header>
         <div class="header-container">
-            <div class="logo"><img src="components/logo.png" alt="Tecauto Logo"></div>
+            <div class="logo"><img src="../imagens/Logo Tecauto Azul - Laranja Png-07-07.png" alt="Tecauto Logo"></div>
             <nav class="menu">
                 <ul>
                     <li><a href="index.html">Início</a></li>
@@ -108,10 +108,12 @@
             </div>
             <div class="footer-section footer-social">
                 <h3>Redes Sociais</h3>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/share/15yyKTsxhR/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com/tecautooficial?t=W4VG_b4m9mwdDBjrFe_ZtQ&s=09" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/tecautooficial/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/tec-auto-55a789377?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
@@ -133,11 +135,12 @@
                 message.style.color = 'red';
                 return;
             }
-
-            fetch('/api/usuarios', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ nome, email, senha })
+            
+            //Consulta actualizada 
+            fetch('https://amusing-ambition-production.up.railway.app/api/criarUsuario', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome, email, senha })
             })
             .then(response => {
                 if (!response.ok) throw new Error('Erro ao criar conta');
@@ -147,7 +150,7 @@
                 message.textContent = 'Conta criada com sucesso! Redirecionando...';
                 message.style.color = 'green';
                 setTimeout(() => {
-                    window.location.href = 'login.html';
+                    location.replace = '../login.html';
                 }, 2000);
             })
             .catch(error => {

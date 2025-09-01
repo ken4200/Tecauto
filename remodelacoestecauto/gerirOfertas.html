@@ -1,11 +1,12 @@
+```html
 <!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Solicite serviços de logística, peças ou sistemas personalizados na Tecauto.">
+    <meta name="description" content="Atualize seu perfil na Tecauto. Gerencie suas informações pessoais de forma segura e prática.">
     <meta name="author" content="Tecauto">
-    <title>Solicitar Serviço - Tecauto</title>
+    <title>Todas Ofertas - Tecauto</title>
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="fonts.css">
     <link rel="stylesheet" href="media.css">
@@ -13,8 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="components/favicon.png">
-    <!-- XLSX library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha512-r22gChDnGv3N3k9ZSWnWDS7zJMc+7KWCLEQ3/kCk/fptA1d4FtuV6ft76c1rZLLB5u3y6N8OvgYWbV7r2EwoT4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <header>
@@ -31,7 +30,7 @@
                     <li><a href="../sobre.html">Sobre</a></li>
                     <li><a href="../contactos.html">Contacto</a></li>
                     <li><a href="../horario.html">Horário</a></li>
-                    <li><a href="../remodelacoestecauto/client_dashboard.html">Dashboard</a></li>
+                    <li><a href="../remodelacoestecauto/admin_dashboard.html">Dashboard</a></li>
                 </ul>
             </nav>
             <div class="login">
@@ -44,25 +43,39 @@
     </header>
 
     <main>
-        <section class="contact-section" aria-labelledby="solicitar-title">
-            <h2 id="solicitar-title">Solicitar Serviço</h2>
-            <p>Preencha o formulário abaixo para solicitar um serviço.</p>
-            <form id="solicitar-form" class="form-modern" aria-describedby="solicitar-message">
+        <!-- Editar Oferta -->
+        <section class="contact-section" aria-labelledby="perfil-title">
+            <h2 id="perfil-title">Editar Oferta</h2>
+            <form id="perfil-form" class="form-modern" aria-describedby="perfil-message">
                 <div class="form-group">
-                    <input type="text" id="tipo-servico" name="tipo-servico" placeholder=" " required aria-required="true">
-                    <label for="tipo-servico">Tipo de Serviço (ex: Logística Terrestre)</label>
+                    <input id="editOfferId" type="hidden">
+                    <input id="ofertaId" type="text" placeholder="Id da Oferta" class="border p-2 rounded w-full mb-2">
                 </div>
                 <div class="form-group">
-                    <textarea id="descricao" name="descricao" placeholder=" " required aria-required="true"></textarea>
-                    <label for="descricao">Descrição do Serviço</label>
+                    <input id="desconto" type="number" placeholder="Desconto (%)" class="border p-2 rounded w-full mb-2">
                 </div>
-                <button type="submit" aria-label="Enviar solicitação de serviço">Enviar Solicitação</button>
-                <button type="button" id="delete-account-btn" class="danger-btn">Excluir Conta</button>
-                <div class="form-message" id="solicitar-message" role="status"></div>
+                <button onclick="limparCampos()" class="danger-btn">Cancelar</button>
+                <button onclick="actualizarDesconto()" class="admin-btn">Actualizar</button>
+                <div class="form-message" id="perfil-message" role="status"></div>
+            </form>
+        </section>
+        <!-- Criar nova Oferta -->
+        <section class="contact-section" aria-labelledby="perfil-title">
+            <h2 id="perfil-title">Criar nova oferta</h2>
+            <form id="perfil-form" class="form-modern" aria-describedby="perfil-message">
+                <div class="form-group">
+                    <input id="produto" type="text" placeholder="Produto" class="border p-2 rounded w-full mb-2">
+                </div>
+                <div class="form-group">
+                    <input id="descontoNovo" type="number" placeholder="Desconto (%)" class="border p-2 rounded w-full mb-2">
+                </div>
+                <button onclick="limparCampos()" class="danger-btn">Cancelar</button>
+                <button onclick="criarNovaOferta()" class="admin-btn">Criar</button>
+                <div class="form-message" id="perfil-message" role="status"></div>
             </form>
         </section>
         <section class="activity-section" aria-labelledby="atividade-title">
-            <h2 id="atividade-title">Histórico de Atividades</h2>
+            <h2 id="atividade-title">Todas Ofertas</h2>
             <ul id="atividade-lista">
             <!-- Itens serão preenchidos dinamicamente -->
             </ul>
@@ -110,6 +123,8 @@
         </div>
     </footer>
 
+    <!-- XLSX library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha512-r22gChDnGv3N3k9ZSWnWDS7zJMc+7KWCLEQ3/kCk/fptA1d4FtuV6ft76c1rZLLB5u3y6N8OvgYWbV7r2EwoT4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript">
         var gk_isXlsx = false;
         var gk_xlsxFileLookup = {};
@@ -143,16 +158,7 @@
         }
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
     <script>
-        // Notificação
-        function showNotification(message, type = 'success') {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.className = `notification show ${type}`;
-            setTimeout(() => notification.classList.remove('show'), 3000);
-        }
-
         // Modo escuro/claro
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
@@ -164,80 +170,67 @@
             this.innerHTML = document.body.classList.contains('dark-mode') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
         });
 
+        // Notificação
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification show ${type}`;
+            setTimeout(() => notification.classList.remove('show'), 3000);
+        }
+
         // Verifica autenticação
         const token = localStorage.getItem('token');
-
+        console.log(token);
+        
         if (!token) {
-            showNotification('Você precisa estar logado para solicitar um serviço.', 'error');
-            setTimeout(() => window.location.href = 'login.html', 2000);
-        } else {
+            window.location.href = './login.html';
+        }
 
-            // Manipula envio do formulário
-            document.getElementById('solicitar-form').addEventListener('submit', async function(e) {
-                e.preventDefault();
+        // Carrega todas ofertas
+        async function carregarOfertas() {
+            try {
+                const response = await fetch('https://amusing-ambition-production.up.railway.app/api/ofertas', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
 
-                const decoded = jwt_decode(localStorage.getItem("token"));
-                const userEmail = decoded.email;
+                if (!response.ok) throw new Error('Erro na resposta da API: ' + response.status);
 
-                const tipo = document.getElementById('tipo-servico').value.trim();
-                const descricao = document.getElementById('descricao').value.trim();
+                const ofertas = await response.json();
+                atualizarOfertas(ofertas);
 
-                if (!tipo || !descricao) {
-                    showNotification('Por favor, preencha todos os campos obrigatórios.', 'error');
-                    return;
+            } catch (error) {
+                console.error('Erro ao carregar ofertas:', error);
+                if (typeof showNotification === "function") {
+                    showNotification('Erro ao carregar ofertas.', 'error');
                 }
+            }
+        }
 
-                try {
-                    // 1️⃣ Envio para Formspree
-                    const formspreePromise = fetch("https://formspree.io/f/myzdgakr", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            tipoDeServico: tipo,
-                            descricao,
-                            emailDoCliente: userEmail
-                        }),
-                    });
+        function atualizarOfertas(ofertas) {
+            const lista = document.getElementById('atividade-lista');
+            lista.innerHTML = '';
 
-                    // 2️⃣ Envio para o Backend (criarPedido)
-                    const backendPromise = fetch("https://amusing-ambition-production.up.railway.app/api/pedidos", {
-                        method: "POST",
-                        headers: { 
-                            "Content-Type": "application/json",
-                            "Authorization": "Bearer " + localStorage.getItem("token") // passa token para authMiddleware
-                        },
-                        body: JSON.stringify({
-                            tipo,
-                            descricao,
-                            status: "pendente" // 🔹 status inicial
-                        }),
-                    });
+            if (!ofertas || ofertas.length === 0) {
+                lista.innerHTML = '<li>Nenhuma atividade registrada.</li>';
+                return;
+            }
 
-                    // Espera ambos terminarem
-                    const [formspreeRes, backendRes] = await Promise.all([formspreePromise, backendPromise]);
-
-                    if (!formspreeRes.ok) throw new Error("Erro ao enviar para o Formspree");
-                    if (!backendRes.ok) throw new Error("Erro ao criar pedido no servidor");
-
-                    const backendData = await backendRes.json();
-
-                    showNotification('Solicitação enviada com sucesso!', 'success');
-                    console.log("Pedido criado no backend:", backendData);
-
-                    document.getElementById('solicitar-form').reset();
-
-                } catch (error) {
-                    console.error("Erro ao enviar solicitação:", error);
-                    showNotification('Erro ao enviar solicitação.', 'error');
-                }
+            ofertas.forEach(oferta => {
+                const li = document.createElement('li');
+                li.textContent = ` Id da Oferta: ${oferta.id}: Desconto ${oferta.desconto} - Oferta: ${oferta.produto}`;
+                lista.appendChild(li);
             });
+        }
 
+        // Chama a função para carregar os ofertas assim que a página carregar
+        carregarOfertas();    
+        
+        // Exclusão de conta
+        document.getElementById('delete-account-btn').addEventListener('click', () => {
+            document.getElementById('delete-modal').style.display = 'flex';
+        });
 
-            // Exclusão de conta
-            document.getElementById('delete-account-btn').addEventListener('click', () => {
-                document.getElementById('delete-modal').style.display = 'flex';
-            });
-            document.getElementById('confirm-delete').addEventListener('click', () => {
+        document.getElementById('confirm-delete').addEventListener('click', () => {
                 console.log("o user: " + token)
                 fetch('https://amusing-ambition-production.up.railway.app/api/apagarUsuario', {
                     method: 'DELETE',
@@ -249,56 +242,20 @@
                 .then(() => {
                     localStorage.removeItem('token');
                     showNotification('Conta excluída com sucesso.', 'success');
-                    setTimeout(() => window.location.href = 'login.html', 1000);
+                    setTimeout(() => location.replace = '../logout.html', 1000);
                 })
                 .catch(error => {
                     showNotification('Erro ao excluir conta.', 'error');
                     console.error('Erro ao excluir conta:', error);
                 });
             });
-            document.getElementById('cancel-delete').addEventListener('click', () => {
-                document.getElementById('delete-modal').style.display = 'none';
-            });
 
-            // Carrega histórico de atividades
-            async function carregarPedidos() {
-                try {
-                    const response = await fetch('https://amusing-ambition-production.up.railway.app/api/pedidos/usuario', {
-                        headers: { 'Authorization': 'Bearer ' + token }
-                    });
+        document.getElementById('cancel-delete').addEventListener('click', () => {
+            document.getElementById('delete-modal').style.display = 'none';
+        });
+    
 
-                    if (!response.ok) throw new Error('Erro na resposta da API: ' + response.status);
-
-                    const pedidos = await response.json();
-                    atualizarAtividades(pedidos);
-
-                } catch (error) {
-                    console.error('Erro ao carregar pedidos:', error);
-                    if (typeof showNotification === "function") {
-                        showNotification('Erro ao carregar pedidos.', 'error');
-                    }
-                }
-            }
-
-            function atualizarAtividades(pedidos) {
-                const lista = document.getElementById('atividade-lista');
-                lista.innerHTML = '';
-
-                if (!pedidos || pedidos.length === 0) {
-                    lista.innerHTML = '<li>Nenhuma atividade registrada.</li>';
-                    return;
-                }
-
-                pedidos.forEach(pedido => {
-                    const li = document.createElement('li');
-                    li.textContent = `${new Date(pedido.data).toLocaleString()}: Pedido ${pedido.tipo_de_servico} - Status: ${pedido.status}`;
-                    lista.appendChild(li);
-                });
-            }
-
-            // Chama a função para carregar os pedidos assim que a página carregar
-            carregarPedidos(); 
-
+        //Sair
             document.getElementById('sair').addEventListener('click', function(e) {
                 e.preventDefault(); // impede o redirecionamento padrão do link
 
@@ -321,8 +278,93 @@
                 }
             });
 
+    async function actualizarDesconto() {
+        event.preventDefault();
+
+        const id = document.getElementById('ofertaId').value.trim();
+        const desconto = document.getElementById('desconto').value.trim();
+        const messageBox = document.getElementById('perfil-message');
+        const token = localStorage.getItem('token');
+
+        if (!id || !desconto) {
+            messageBox.textContent = "Preencha todos os campos!";
+            messageBox.style.color = "red";
+            return;
         }
+
+        try {
+            const res = await fetch(`https://amusing-ambition-production.up.railway.app/api/ofertas/${id}/desconto`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({ desconto })
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                messageBox.textContent = "Desconto atualizado!";
+                messageBox.style.color = "green";
+                limparCampos();
+            } else {
+                messageBox.textContent = data.error || "Erro ao atualizar desconto.";
+                messageBox.style.color = "red";
+            }
+        } catch (err) {
+            console.error("Erro:", err);
+            messageBox.textContent = "Erro de conexão.";
+            messageBox.style.color = "red";
+        }
+    }
+
+    async function criarNovaOferta() {
+        event.preventDefault();
+
+        const produto = document.getElementById('produto').value.trim();
+        const desconto = document.getElementById('descontoNovo').value.trim();
+        const messageBox = document.getElementById('perfil-message');
+        const token = localStorage.getItem('token');
+
+        if (!produto || !desconto) {
+            messageBox.textContent = "Preencha todos os campos!";
+            messageBox.style.color = "red";
+            return;
+        }
+
+        console.log("O produto "+produto);
+        console.log("O desconto:"+desconto);
+        try {
+            const res = await fetch(`https://amusing-ambition-production.up.railway.app/api/ofertas`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({ desconto, produto })
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                messageBox.textContent = "Desconto atualizado!";
+                messageBox.style.color = "green";
+                limparCampos();
+            } else {
+                messageBox.textContent = data.error || "Erro ao atualizar desconto.";
+                messageBox.style.color = "red";
+            }
+        } catch (err) {
+            console.error("Erro:", err);
+            messageBox.textContent = "Erro de conexão.";
+            messageBox.style.color = "red";
+        }
+    }
+    
+    function limparCampos() {
+        document.getElementById('ofertaId').value = "";
+        document.getElementById('desconto').value = "";
+    }
+
     </script>
 </body>
 </html>
-```

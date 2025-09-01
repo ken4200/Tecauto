@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -51,24 +12,29 @@
 </head>
 <body class="bg-gray-100 font-sans">
     <!-- Botão de Alternância de Tema -->
-    <button class="toggle-dark-mode" onclick="toggleDarkMode()">
+    <button class="toggle-dark-mode fixed top-4 right-4 p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition" onclick="toggleDarkMode()">
         <i class="fas fa-moon"></i>
     </button>
 
     <!-- Navbar -->
     <nav class="bg-white text-gray-800 p-4 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-4">
-                <img src="https://via.placeholder.com/40" alt="Tecauto Logo" class="h-10">
+            
+            <div class="logo">
+                <img src="../imagens/Logo Tecauto Azul - Laranja Png-07-07.png" alt="Tecauto Logo">
                 <span class="text-xl font-bold">Tecauto Admin</span>
             </div>
+            <!-- <div class="flex items-center space-x-4"> -->
+                <!-- <img src="https://via.placeholder.com/40" alt="Tecauto Logo" class="h-10">
+                <span class="text-xl font-bold">Tecauto Admin</span>
+            </div> -->
             <div class="flex space-x-6">
-                <a href="#" class="hover:underline">Início</a>
-                <a href="#" class="hover:underline">Serviços</a>
-                <a href="#" class="hover:underline">Sobre</a>
-                <a href="#" class="hover:underline">Contato</a>
-                <a href="#" class="hover:underline">Horário</a>
-                <a href="#" class="hover:underline">Dashboard</a>
+                <a href="../index.html" class="hover:underline">Início</a>
+                <a href="../servicos.html" class="hover:underline">Serviços</a>
+                <a href="../sobre.html" class="hover:underline">Sobre</a>
+                <a href="../contactos.html" class="hover:underline">Contato</a>
+                <a href="../horario.html" class="hover:underline">Horário</a>
+                <a href="./admin_dashboard.html" class="hover:underline">Dashboard</a>
             </div>
         </div>
     </nav>
@@ -82,20 +48,20 @@
             <!-- Gerenciar Usuários -->
             <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition dashboard-card">
                 <h3 class="text-xl font-semibold text-gray-800">Gerenciar Usuários</h3>
-                <p class="text-gray-600 mt-2">Visualize e edite a lista de usuários.</p>
-                <a href="#" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Gerenciar</a>
+                <p class="text-gray-600 mt-2">Visualize, edite ou remova usuários da base de dados.</p>
+                <a href="./gerirUsuarios.html" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Gerenciar</a>
             </div>
             <!-- Gerenciar Pedidos -->
             <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition dashboard-card">
                 <h3 class="text-xl font-semibold text-gray-800">Gerenciar Pedidos</h3>
-                <p class="text-gray-600 mt-2">Acompanhe e atualize todos os pedidos.</p>
-                <a href="#" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Gerenciar</a>
+                <p class="text-gray-600 mt-2">Acompanhe e atualize o status dos pedidos.</p>
+                <a href="./gerirPedidos.html" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Gerenciar</a>
             </div>
             <!-- Gerenciar Ofertas -->
             <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition dashboard-card">
                 <h3 class="text-xl font-semibold text-gray-800">Gerenciar Ofertas</h3>
                 <p class="text-gray-600 mt-2">Crie, edite ou remova ofertas.</p>
-                <a href="#" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Gerenciar</a>
+                <a href="./gerirOfertas.html" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Gerenciar</a>
             </div>
             <!-- Relatórios -->
             <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition dashboard-card">
@@ -118,34 +84,22 @@
         </div>
 
         <!-- Histórico de Atividades -->
-        <div class="mt-12 activity-section">
+        <div class="activity-section">
             <h2>Histórico de Atividades</h2>
-            <ul>
-                <li>Usuário João criado em 10/08/2025</li>
-                <li>Oferta "Desconto de Verão" criada em 09/08/2025</li>
-                <li>Pedido #1234 atualizado em 08/08/2025</li>
+             <ul id="atividade-lista">
+            <!-- Itens serão preenchidos dinamicamente -->
             </ul>
         </div>
     </main>
 
-    <!-- Modal de Confirmação -->
-    <div id="deleteModal" class="modal modal-hidden">
-        <div class="modal-content">
-            <h3 class="text-xl font-semibold text-gray-800">Atenção!</h3>
-            <p class="mt-2">Tem certeza que deseja excluir sua conta? Esta ação é irreversível e resultará na perda permanente de todos os dados associados.</p>
-            <div class="mt-6 flex justify-end space-x-4">
-                <button onclick="closeModal()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition">Cancelar</button>
-                <button onclick="confirmDelete()" class="bg-error-color text-white px-4 py-2 rounded hover:bg-red-700 transition">Confirmar Exclusão</button>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Notificação -->
-    <div id="notification" class="notification hidden"></div>
+    <div id="notification" class="notification hidden fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded shadow-lg"></div>
 
     <!-- Botão Flutuante WhatsApp -->
-    <a href="https://wa.me/258840203487" class="whatsapp-float" target="_blank">
-        <i class="fab fa-whatsapp"></i>
+    <a href="https://wa.me/258840203487" class="whatsapp-float fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition" target="_blank">
+        <i class="fab fa-whatsapp text-2xl"></i>
     </a>
 
     <!-- Footer -->
@@ -168,11 +122,11 @@
             </div>
             <div class="footer-section">
                 <h3>Redes Sociais</h3>
-                <div class="flex space-x-4 footer-social">
-                    <a href="#" class="hover:text-primary-color"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z"></path></svg></a>
-                    <a href="#" class="hover:text-primary-color"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path></svg></a>
-                    <a href="#" class="hover:text-primary-color"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h16c2.2 0 4 1.8 4 4v8c0 2.2-1.8 4-4 4H4c-2.2 0-4-1.8-4-4V8c0-2.2 1.8-4 4-4z"></path></svg></a>
-                    <a href="#" class="hover:text-primary-color"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 14v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.93-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"></path></svg></a>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/share/15yyKTsxhR/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com/tecautooficial?t=W4VG_b4m9mwdDBjrFe_ZtQ&s=09" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/tecautooficial/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/tec-auto-55a789377?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
@@ -182,19 +136,12 @@
     </footer>
 
     <script>
-        // Modal functions
-        function openModal() {
-            document.getElementById('deleteModal').classList.remove('modal-hidden');
-            document.getElementById('deleteModal').classList.add('modal-visible');
-        }
-
-        function closeModal() {
-            document.getElementById('deleteModal').classList.remove('modal-visible');
-            document.getElementById('deleteModal').classList.add('modal-hidden');
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = 'login.html';
         }
 
         function confirmDelete() {
-            // Simula exclusão local com notificação
             const notification = document.getElementById('notification');
             notification.textContent = 'Conta excluída com sucesso! (Simulação)';
             notification.className = 'notification success show';
@@ -216,6 +163,188 @@
                 icon.classList.add('fa-moon');
             }
         }
+
+        // Users modal functions
+        function openUsersModal() {
+            const usersList = document.getElementById('usersList');
+            usersList.innerHTML = users.map(user => `
+                <div class="flex justify-between items-center p-2 border-b">
+                    <span>${user.name} (${user.email})</span>
+                    <button onclick="deleteUser(${user.id})" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Apagar</button>
+                </div>
+            `).join('');
+            document.getElementById('usersModal').classList.remove('modal-hidden');
+            document.getElementById('usersModal').classList.add('modal-visible');
+        }
+
+        function closeUsersModal() {
+            document.getElementById('usersModal').classList.remove('modal-visible');
+            document.getElementById('usersModal').classList.add('modal-hidden');
+        }
+
+        function deleteUser(userId) {
+            users = users.filter(user => user.id !== userId);
+            const notification = document.getElementById('notification');
+            notification.textContent = 'Usuário excluído com sucesso! (Simulação)';
+            notification.className = 'notification success show';
+            setTimeout(() => {
+                notification.className = 'notification hidden';
+            }, 3000);
+            openUsersModal(); // Refresh the list
+        }
+
+        // Orders modal functions
+        function openOrdersModal() {
+            const ordersList = document.getElementById('ordersList');
+            ordersList.innerHTML = orders.map(order => `
+                <div class="flex justify-between items-center p-2 border-b">
+                    <span>Pedido #${order.id}: ${order.product} (${order.status})</span>
+                    <button onclick="updateOrderStatus(${order.id})" class="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700">Atualizar Status</button>
+                </div>
+            `).join('');
+            document.getElementById('ordersModal').classList.remove('modal-hidden');
+            document.getElementById('ordersModal').classList.add('modal-visible');
+        }
+
+        function closeOrdersModal() {
+            document.getElementById('ordersModal').classList.remove('modal-visible');
+            document.getElementById('ordersModal').classList.add('modal-hidden');
+        }
+
+        function updateOrderStatus(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = order.status === 'Pendente' ? 'Entregue' : 'Pendente';
+                const notification = document.getElementById('notification');
+                notification.textContent = `Status do pedido #${orderId} atualizado para ${order.status}! (Simulação)`;
+                notification.className = 'notification success show';
+                setTimeout(() => {
+                    notification.className = 'notification hidden';
+                }, 3000);
+                openOrdersModal(); // Refresh the list
+            }
+        }
+
+        // Offers modal functions
+        function openOffersModal() {
+            const offersList = document.getElementById('offersList');
+            offersList.innerHTML = offers.map(offer => `
+                <div class="flex justify-between items-center p-2 border-b">
+                    <span>${offer.product} (${offer.discount}%)</span>
+                    <div>
+                        <button onclick="openEditOfferModal(${offer.id})" class="bg-yellow-600 text-white px-2 py-1 rounded hover:bg-yellow-700 mr-2">Editar</button>
+                        <button onclick="deleteOffer(${offer.id})" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Apagar</button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('offersModal').classList.remove('modal-hidden');
+            document.getElementById('offersModal').classList.add('modal-visible');
+        }
+
+        function closeOffersModal() {
+            document.getElementById('offersModal').classList.remove('modal-visible');
+            document.getElementById('offersModal').classList.add('modal-hidden');
+        }
+
+        function createOffer() {
+            const product = document.getElementById('offerProduct').value;
+            const discount = document.getElementById('offerDiscount').value;
+            if (product && discount) {
+                offers.push({ id: offers.length + 1, product, discount: parseInt(discount) });
+                document.getElementById('offerProduct').value = '';
+                document.getElementById('offerDiscount').value = '';
+                const notification = document.getElementById('notification');
+                notification.textContent = 'Oferta criada com sucesso! (Simulação)';
+                notification.className = 'notification success show';
+                setTimeout(() => {
+                    notification.className = 'notification hidden';
+                }, 3000);
+                openOffersModal(); // Refresh the list
+            }
+        }
+
+        function openEditOfferModal(offerId) {
+            const offer = offers.find(o => o.id === offerId);
+            if (offer) {
+                document.getElementById('editOfferId').value = offer.id;
+                document.getElementById('editOfferProduct').value = offer.product;
+                document.getElementById('editOfferDiscount').value = offer.discount;
+                document.getElementById('editOfferModal').classList.remove('modal-hidden');
+                document.getElementById('editOfferModal').classList.add('modal-visible');
+            }
+        }
+
+        function closeEditOfferModal() {
+            document.getElementById('editOfferModal').classList.remove('modal-visible');
+            document.getElementById('editOfferModal').classList.add('modal-hidden');
+        }
+
+        function saveOffer() {
+            const offerId = parseInt(document.getElementById('editOfferId').value);
+            const product = document.getElementById('editOfferProduct').value;
+            const discount = document.getElementById('editOfferDiscount').value;
+            if (product && discount) {
+                const offer = offers.find(o => o.id === offerId);
+                if (offer) {
+                    offer.product = product;
+                    offer.discount = parseInt(discount);
+                    const notification = document.getElementById('notification');
+                    notification.textContent = 'Oferta atualizada com sucesso! (Simulação)';
+                    notification.className = 'notification success show';
+                    setTimeout(() => {
+                        notification.className = 'notification hidden';
+                    }, 3000);
+                    closeEditOfferModal();
+                    openOffersModal(); // Refresh the list
+                }
+            }
+        }
+
+        function deleteOffer(offerId) {
+            offers = offers.filter(offer => offer.id !== offerId);
+            const notification = document.getElementById('notification');
+            notification.textContent = 'Oferta excluída com sucesso! (Simulação)';
+            notification.className = 'notification success show';
+            setTimeout(() => {
+                notification.className = 'notification hidden';
+            }, 3000);
+            openOffersModal(); // Refresh the list
+        }
+
+        async function carregarPedidos() {
+            try {
+                const response = await fetch('https://amusing-ambition-production.up.railway.app/api/pedidos', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+
+                if (!response.ok) throw new Error('Erro na resposta da API: ' + response.status);
+
+                const pedidos = await response.json();
+                atualizarAtividades(pedidos);
+
+            } catch (error) {
+                console.error('Erro ao carregar pedidos:', error);
+                showNotification('Erro ao carregar pedidos.', 'error');
+            }
+        }
+
+        function atualizarAtividades(pedidos) {
+            const lista = document.getElementById('atividade-lista');
+            lista.innerHTML = '';
+
+            if (!pedidos || pedidos.length === 0) {
+                lista.innerHTML = '<li>Nenhuma atividade registrada.</li>';
+                return;
+            }
+
+            pedidos.forEach(pedido => {
+                const li = document.createElement('li');
+                li.textContent = `${new Date(pedido.data).toLocaleString()}: Pedido ${pedido.tipo_de_servico} - Status: ${pedido.status}`;
+                lista.appendChild(li);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', carregarPedidos);
     </script>
 </body>
 </html>

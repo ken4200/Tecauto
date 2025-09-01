@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Atualize seu perfil na Tecauto. Gerencie suas informações pessoais de forma segura e prática.">
     <meta name="author" content="Tecauto">
-    <title>Meu Perfil - Tecauto</title>
+    <title>Todas Ofertas - Tecauto</title>
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="fonts.css">
     <link rel="stylesheet" href="media.css">
@@ -29,52 +29,64 @@
                     <li><a href="../sobre.html">Sobre</a></li>
                     <li><a href="../contactos.html">Contacto</a></li>
                     <li><a href="../horario.html">Horário</a></li>
-                    <li><a href="../remodelacoestecauto/client_dashboard.html">Dashboard</a></li>
+                    <li><a href="../remodelacoestecauto/admin_dashboard.html">Dashboard</a></li>
                 </ul>
             </nav>
             <div class="login">
                 <a id="sair" aria-label="Sair da conta">Sair</a>
             </div>
             <div class="theme-toggle">
-                <button type="submit" class="admin-button" aria-label="Alternar tema"><i class="fas fa-moon"></i></button>
+                <button id="theme-btn" aria-label="Alternar tema"><i class="fas fa-moon"></i></button>
             </div>
         </div>
     </header>
 
     <main>
+        <!-- Criar conta de um Usuario -->
         <section class="contact-section" aria-labelledby="perfil-title">
-            <h2 id="perfil-title">Meu Perfil</h2>
-            <p>Atualize suas informações abaixo.</p>
+            <h2 id="perfil-title">Criar Usuario</h2>
+            <form class="form-modern" id="createAccountForm">
+                <div class="form-group">
+                    <input type="text" id="nome" name="nome" required>
+                    <label for="nome">Nome completo</label>
+                    <span class="error" id="nomeError"></span>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" required>
+                    <label for="email">Email</label>
+                    <span class="error" id="emailError"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="senha" name="senha" required>
+                    <label for="password">Senha</label>
+                    <span class="error" id="passwordError"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <label for="confirmPassword">Confirmar senha</label>
+                    <span class="error" id="confirmPasswordError"></span>
+                </div>
+                <button class="admin-btn" id="confirm-delete" type="button" onclick="criarConta()">Criar Conta</button>
+            </form>
+        </section>
+
+        <!-- Editar Usuario -->
+        <section class="contact-section" aria-labelledby="perfil-title">
+            <h2 id="perfil-title">Editar Password Do Usuario</h2>
             <form id="perfil-form" class="form-modern" aria-describedby="perfil-message">
-                <!-- <div class="form-group">
-                    <img id="foto-preview" src="" alt="Pré-visualização da foto de perfil" style="display: none; max-width: 100px; border-radius: 50%; margin-bottom: 10px;">
-                    <input type="file" id="foto" name="foto" accept="image/*" aria-label="Selecionar foto de perfil">
-                    <label for="foto">Foto de Perfil</label>
-                </div> -->
                 <div class="form-group">
-                    <label>Nome:</label>
-                    <p id="nomeDisplay"></p>
+                    <input id="usuarioId" type="text" placeholder="Id do user" class="border p-2 rounded w-full mb-2">
                 </div>
                 <div class="form-group">
-                    <label>Email:</label>
-                    <p id="emailDisplay"></p>
+                    <input id="password" type="text" placeholder="Password" class="border p-2 rounded w-full mb-2">
                 </div>
-                <div class="form-group">
-                    <input type="password" id="senha" name="senha" placeholder=" ">
-                    <label for="senha">Nova Senha (opcional)</label>
-                    <div id="senha-feedback" class="form-feedback"></div>
-                </div>
-                <div class="form-group">
-                    <input type="password" id="confirmar-senha" name="confirmar-senha" placeholder=" ">
-                    <label for="confirmar-senha">Confirmar Nova Senha</label>
-                </div>
-                <button type="submit" aria-label="Atualizar informações do perfil">Atualizar Perfil</button>
-                <button type="button" id="delete-account-btn" class="danger-btn">Excluir Conta</button>
+                <button onclick="limparCampos()" class="danger-btn bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition">Cancelar</button>
+                <button onclick="actualizarPassword()" class="admin-btn bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Actualizar</button>
                 <div class="form-message" id="perfil-message" role="status"></div>
             </form>
         </section>
         <section class="activity-section" aria-labelledby="atividade-title">
-            <h2 id="atividade-title">Histórico de Atividades</h2>
+            <h2 id="atividade-title">Todos usuários</h2>
             <ul id="atividade-lista">
             <!-- Itens serão preenchidos dinamicamente -->
             </ul>
@@ -179,147 +191,65 @@
 
         // Verifica autenticação
         const token = localStorage.getItem('token');
-        console.log(token);
         
         if (!token) {
             window.location.href = './login.html';
         }
+        
 
-        // Mostrar nome e email
-document.addEventListener("DOMContentLoaded", async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        window.location.href = 'login.html';
-        return;
-    }
-
-    try {
-        const response = await fetch('https://amusing-ambition-production.up.railway.app/api/nomeAndEmail', {
-            method: 'GET',
-            headers: { 'Authorization': 'Bearer ' + token }
-        });
-
-        if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`);
-
-        const data = await response.json();
-
-        // Aqui você substitui o uso dos inputs
-        document.getElementById('nomeDisplay').textContent = data.nome || "Nome não encontrado";
-        document.getElementById('emailDisplay').textContent = data.email || "Email não encontrado";
-
-        console.log("✅ Dados carregados:", data);
-
-    } catch (error) {
-        console.error('Erro ao carregar nome/email:', error);
-    }
-});
-
-
-
-        // Carrega histórico de atividades
-        async function carregarPedidos() {
+        // Carrega os usuarios
+        async function carregarUsuarios() {
             try {
-                const response = await fetch('https://amusing-ambition-production.up.railway.app/api/pedidos/usuario', {
-                    headers: { 'Authorization': 'Bearer ' + token }
+                const response = await fetch('https://amusing-ambition-production.up.railway.app/api/usuarios', {
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    }
                 });
 
-                if (!response.ok) throw new Error('Erro na resposta da API: ' + response.status);
 
-                const pedidos = await response.json();
-                atualizarAtividades(pedidos);
+                const data = await response.json();
+                console.log("Dados recebidos:", data);
+
+                if (!response.ok) {
+                    throw new Error(data.error || `Erro HTTP: ${response.status}`);
+                }
+
+                // Garante que sempre será um array para evitar erros no forEach
+                const usuarios = Array.isArray(data) ? data : [data];
+
+                actualizarUsuarios(usuarios);
 
             } catch (error) {
-                console.error('Erro ao carregar pedidos:', error);
+                console.error('Erro ao carregar usuarios:', error);
                 if (typeof showNotification === "function") {
-                    showNotification('Erro ao carregar pedidos.', 'error');
+                    showNotification('Erro ao carregar usuários.', 'error');
                 }
             }
-        }
+    }
 
-        function atualizarAtividades(pedidos) {
+        function actualizarUsuarios(usuarios) {
             const lista = document.getElementById('atividade-lista');
             lista.innerHTML = '';
 
-            if (!pedidos || pedidos.length === 0) {
-                lista.innerHTML = '<li>Nenhuma atividade registrada.</li>';
+            if (!usuarios || usuarios.length === 0) {
+                lista.innerHTML = '<li>Nenhum usuario inserido.</li>';
                 return;
             }
 
-            pedidos.forEach(pedido => {
+            usuarios.forEach(usuario => {
                 const li = document.createElement('li');
-                li.textContent = `${new Date(pedido.data).toLocaleString()}: Pedido ${pedido.tipo_de_servico} - Status: ${pedido.status}`;
+                li.textContent = `Id: ${usuario.id} - Nome: ${usuario.nome} - Email: ${usuario.email}`;
                 lista.appendChild(li);
             });
         }
 
-        // Chama a função para carregar os pedidos assim que a página carregar
-        carregarPedidos();    
+        // Chama a função para carregar os usuarios assim que a página carregar
+        carregarUsuarios();    
 
         // Validação de senha em tempo real
-        document.getElementById('senha').addEventListener('input', function(e) {
-            const senha = e.target.value;
-            const feedback = document.getElementById('senha-feedback');
-            if (senha.length === 0) {
-                feedback.textContent = '';
-                return;
-            }
-            let messages = [];
-            if (senha.length < 8) messages.push('Mínimo de 8 caracteres.');
-            if (!/[A-Z]/.test(senha)) messages.push('Inclua uma letra maiúscula.');
-            if (!/[0-9]/.test(senha)) messages.push('Inclua um número.');
-            feedback.textContent = messages.join(' ');
-            feedback.style.color = messages.length > 0 ? 'red' : 'green';
-        });
 
-        // Atualiza Password
-        document.getElementById('perfil-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-
-            const senha = document.getElementById('senha').value.trim();
-            const confirmarSenha = document.getElementById('confirmar-senha').value.trim();
-
-            if (!senha) {
-                showNotification('Por favor, insira a nova senha.', 'error');
-                return;
-            }
-
-            if (senha !== confirmarSenha) {
-                showNotification('As senhas não coincidem.', 'error');
-                return;
-            }
-
-            const token = localStorage.getItem('token');
-            if (!token) {
-                showNotification('Você precisa estar logado para atualizar a senha.', 'error');
-                return;
-            }
-
-            try {
-                const response = await fetch('https://amusing-ambition-production.up.railway.app/api/actualizarPassword', {
-                    method: 'PUT',
-                    headers: { 
-                        'Authorization': 'Bearer ' + token,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ novaSenha: confirmarSenha })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    showNotification('Senha atualizada com sucesso!', 'success');
-                    document.getElementById('senha').value = '';
-                    document.getElementById('confirmar-senha').value = '';
-                } else {
-                    showNotification(data.error || 'Erro ao atualizar senha.', 'error');
-                }
-            } catch (err) {
-                console.error('Erro ao atualizar senha:', err);
-                showNotification('Erro de conexão ao atualizar senha.', 'error');
-            }
-        });
-
+        
         // Exclusão de conta
         document.getElementById('delete-account-btn').addEventListener('click', () => {
             document.getElementById('delete-modal').style.display = 'flex';
@@ -372,6 +302,95 @@ document.addEventListener("DOMContentLoaded", async () => {
                     setTimeout(() => location.replace('./logout.html'), 2000);
                 }
             });
+
+        async function actualizarPassword() {
+        event.preventDefault();
+
+        const id = document.getElementById('usuarioId').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const messageBox = document.getElementById('perfil-message');
+        const token = localStorage.getItem('token');
+
+        if (!id || !password) {
+            messageBox.textContent = "Preencha todos os campos!";
+            messageBox.style.color = "red";
+            return;
+        }
+
+        try {
+            const res = await fetch("https://amusing-ambition-production.up.railway.app/api/actualizarPasswordCliente", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({ id, password })
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                messageBox.textContent = "Senha atualizada!";
+                messageBox.style.color = "green";
+                limparCampos();
+            } else {
+                messageBox.textContent = data.error || "Erro ao atualizar senha.";
+                messageBox.style.color = "red";
+            }
+        } catch (err) {
+            console.error(" Erro:", err);
+            messageBox.textContent = "Erro de conexão.";
+            messageBox.style.color = "red";
+        }
+    }
+
+        const form = document.getElementById("createAccountForm");
+
+        async function criarConta() {
+        const nome = document.getElementById('nome').value;
+        const email = document.getElementById('email').value;
+        const senha = document.getElementById('senha').value;
+        const comfirmarSenha = document.getElementById('confirmPassword').value;
+
+
+        if (senha !== comfirmarSenha) {
+            alert("As senhas não coincidem!");
+            return;
+        }
+
+        try {
+            const response = await fetch("https://amusing-ambition-production.up.railway.app/api/criarUsuario", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    nome: nome,
+                    email: email,
+                    senha: senha
+                })
+            });
+
+            console.log("Response status:", response.status);
+
+            if (!response.ok) {
+                throw new Error("Erro na requisição: " + response.status);
+            }
+
+            const data = await response.json();
+            console.log("Resposta da API:", data);
+
+            alert("Conta criada com sucesso!");
+
+        } catch (error) {
+            console.error("Erro ao criar conta:", error);
+        }
+    }
+    
+    function limparCampos() {
+        document.getElementById('usuarioId').value = "";
+        document.getElementById('password').value = "";
+    }
+
     </script>
 </body>
 </html>
